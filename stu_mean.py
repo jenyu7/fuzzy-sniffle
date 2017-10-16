@@ -11,5 +11,8 @@ command = "SELECT id FROM peeps"
 identifiers = c.execute(command)
 
 for stu in identifier:
-    c.execute("SELECT mark FROM courses WHERE " + stu + " = id")
+    grades = c.execute("SELECT mark FROM courses WHERE " + stu + " = id")
+    for mark in grades:
+        average += mark
+        count += 1
     

@@ -9,15 +9,16 @@ c = db.cursor()    #facilitate db ops
 
 command = "SELECT id FROM peeps"
 identifiers = c.execute(command)
-#print identifiers
+#print identifiers.fetchall()
+#print identifiers.fetchall()
 
 
-for stu in identifiers:
-    print "Student:", stu
+for stu in identifiers.fetchall():
+    print "Student:", stu[0]
     grades = c.execute("SELECT mark FROM courses WHERE " + str(stu[0]) + " = id")
     #print grades
     for mark in grades:
-        print "Mark for" + str(stu[0]) + ":" + str(mark[0])
+        print "Mark for " + str(stu[0]) + ": " + str(mark[0])
         '''
         average += mark
         count += 1

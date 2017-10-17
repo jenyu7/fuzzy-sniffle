@@ -31,12 +31,22 @@ def calc_avg( student ):
         average += grade[0]
         number += 1
     average /= number
-    print "Average for student id " + str(student[0]) + " is: " + str(average)
+    #print "Average for student id " + str(student[0]) + " is: " + str(average)
     return average
+
+def student_info( student ):
+    avg = calc_avg(student)
+    command = "SELECT name FROM peeps WHERE " + str(student[0]) + "=id"
+    names = c.execute(command)
+    for name in names:
+        names = name[0]
+    print names + " with id " + str(student[0]) + " has average: " + str(avg)
 
 #print_student()
 command = "SELECT id FROM peeps"
 ids = c.execute(command)
-for student in ids.fetchall():
-    calc_avg(student)
+for student_id in ids.fetchall():
+    #calc_avg(student_id)
+    student_info(student_id)
+
 

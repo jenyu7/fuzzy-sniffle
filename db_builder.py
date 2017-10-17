@@ -30,6 +30,7 @@ def populate(csv_file, table_name):
         for field in row:
             print row[field]
             j += '"' + row[field] + '",'
+        #strip off extra comma
         j = j[0:-1]
         j += ")"
         c.execute(j)
@@ -43,6 +44,7 @@ c.execute(create_table("peeps", "age TEXT, name INTEGER, id INTEGER"))
 populate("courses.csv", "courses")
 populate("peeps.csv", "peeps")
 
+# TESTING STUFF
 foo = c.execute("SELECT name, peeps.id, mark FROM peeps, courses WHERE peeps.id = courses.id")
 
 for bar in foo:

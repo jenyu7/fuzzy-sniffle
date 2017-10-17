@@ -9,10 +9,16 @@ c = db.cursor()    #facilitate db ops
 
 command = "SELECT id FROM peeps"
 identifiers = c.execute(command)
+#print identifiers
 
-for stu in identifier:
-    grades = c.execute("SELECT mark FROM courses WHERE " + stu + " = id")
+
+for stu in identifiers:
+    #print stu
+    grades = c.execute("SELECT mark FROM courses WHERE " + str(stu[0]) + " = id")
+    #print grades
     for mark in grades:
+        print mark[0]
+        '''
         average += mark
         count += 1
-    
+        '''

@@ -13,11 +13,11 @@ identifiers = c.execute(command)
 
 
 for stu in identifiers:
-    #print stu
+    print "Student:", stu
     grades = c.execute("SELECT mark FROM courses WHERE " + str(stu[0]) + " = id")
     #print grades
     for mark in grades:
-        print mark[0]
+        print "Mark for" + str(stu[0]) + ":" + str(mark[0])
         '''
         average += mark
         count += 1

@@ -14,12 +14,19 @@ identifiers = c.execute(command)
 
 
 for stu in identifiers.fetchall():
-    print "Student:", stu[0]
+    #print "Student:", stu[0]
     grades = c.execute("SELECT mark FROM courses WHERE " + str(stu[0]) + " = id")
     #print grades
+    average = length = 0
     for mark in grades:
-        print "Mark for " + str(stu[0]) + ": " + str(mark[0])
-        '''
-        average += mark
-        count += 1
-        '''
+        #print "Mark for " + str(stu[0]) + ": " + str(mark[0])
+        average += mark[0]
+        length += 1
+    average /= length
+    #print "Average for Student " + str(stu[0]) + ": " + str(average)
+    names = c.execute("SELECT name FROM peeps WHERE " + str(stu[0]) + " = id")
+    for name in names:
+        print "Average for student " + name[0] + " who has id " +\
+                str(stu[0]) + " is " + str(average)
+
+

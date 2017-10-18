@@ -88,6 +88,13 @@ def update_table():
             print command
             c.execute(command)
 
+
+def add_course(code, s_id, mark):
+    params = (code, s_id, mark)
+    #command = "INSERT INTO courses VALUES ( ?, ?, ?);"
+    #print command
+    c.execute("INSERT INTO courses VALUES ( ?, ?, ?);", params)
+
 #print_student()
 command = "SELECT id FROM peeps"
 ids = c.execute(command)
@@ -98,6 +105,7 @@ for student_id in ids.fetchall():
 #print students
 create_averages_table( students )
 update_table()
+add_course("hello", 10, 40);
 
 
 db.commit() #save changes

@@ -43,8 +43,7 @@ def calc_avg( student ):
     #print "Average for student id " + str(student[0]) + " is: " + str(average)
     return average
 
-students = {}
-def student_info( student ):
+def student_info( student, dictionary):
     '''
     Populates dictionary students with students id as the key and and array as the value.
 
@@ -56,28 +55,49 @@ def student_info( student ):
     for name in names:
         names = name[0]
     print names + " with id " + str(student[0]) + " has average: " + str(avg)
-    students[student[0]] = [names, avg]
+    dictionary[student[0]] = [names, avg]
 
-def create_averages_table():
+def create_averages_table( dictionary ):
     '''
     Creates table with each student's id and their associated average.
     '''
     command = "CREATE TABLE peeps_avg (id INTEGER PRIMARY KEY, avg INTEGER)"
     c.execute(command)
-    for student in students:
+    for student in dictionary:
         command = "INSERT INTO peeps_avg VALUES ( " +\
-                str(student) + ", " + str(students[student][1]) + ")"
+                str(student) + ", " + str(dictionary[student][1]) + ")"
         #print command
         c.execute(command)
+
+def update_table():
+    f = open('courses.csv')
+    courses = csv.DictReader(f)
+    marks = {}
+    for mark in courses:
+        print mark
+        if marks.get(mark['id']) == None:
+            marks[ mark['id'] ] = [0, 0]
+        else:
+            marks[ mark['id'] ][0] += int(mark['mark'])
+            marks[ mark['id'] ][1] += 1
+    print marks
+    for mark in marks:
+        if marks[mark][1] != 0:
+            command = "UPDATE peeps_avg SET avg=" + str(marks[mark][0]/marks[mark][1]) +\
+                    " WHERE id = " + mark
+            print command
+            c.execute(command)
 
 #print_student()
 command = "SELECT id FROM peeps"
 ids = c.execute(command)
+students = {}
 for student_id in ids.fetchall():
     #calc_avg(student_id)
-    student_info(student_id)
+    student_info(student_id, students)
 #print students
-create_averages_table()
+create_averages_table( students )
+update_table()
 
 
 db.commit() #save changes

@@ -58,12 +58,27 @@ def student_info( student ):
     print names + " with id " + str(student[0]) + " has average: " + str(avg)
     students[student[0]] = [names, avg]
 
+def create_averages_table():
+    '''
+    Creates table with each student's id and their associated average.
+    '''
+    command = "CREATE TABLE peeps_avg (id INTEGER PRIMARY KEY, avg INTEGER)"
+    c.execute(command)
+    for student in students:
+        command = "INSERT INTO peeps_avg VALUES ( " +\
+                str(student) + ", " + str(students[student][1]) + ")"
+        #print command
+        c.execute(command)
+
 #print_student()
 command = "SELECT id FROM peeps"
 ids = c.execute(command)
 for student_id in ids.fetchall():
     #calc_avg(student_id)
     student_info(student_id)
+#print students
+create_averages_table()
 
-print students
 
+db.commit() #save changes
+db.close() #close database
